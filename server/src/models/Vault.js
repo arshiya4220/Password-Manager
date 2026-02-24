@@ -20,8 +20,11 @@ const vaultSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    lastAccessedAt: {
+      type: Date,
+    },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 module.exports = mongoose.model("Vault", vaultSchema);

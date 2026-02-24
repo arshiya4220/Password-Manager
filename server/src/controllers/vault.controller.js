@@ -55,11 +55,53 @@ exports.decryptPassword = async (req, res) => {
       vault.encryptedPassword,
       SECRET,
       vault.iv,
-      vault.authTag
+      vault.authTag,
     );
+    vault.lastAccessedAt = new Date();
+    await vault.save();
 
     res.json({ password: decrypted });
   } catch (err) {
     res.status(500).json({ message: "Server error" });
   }
+};
+exports.toggleFavorite = async (req, res) => {
+  try {
+    const vault = await Vault.findOne({
+      _id: req.params.id,
+      userId: req.user.userId,
+    });
+
+    if (!vault) {
+      return res.status(404).json({ message: "Not found" });
+    }
+
+    vault.isFavorite = !vault.isFavorite;
+    await vault.save();
+
+    res.json({
+      message: "Favorite updated",
+      isFavorite: vault.isFavorite,
+    });
+  } catch (err) {
+    res.status(500).json({ message: "Server error" });
+  }
+};
+exports.getFavorites = async (req, res) => {
+  const favorites = await Vault.find({
+    userId: req.user.userId,
+    isFavorite: true,
+  }).select("-encryptedPassword -iv -authTag");
+
+  res.json(favorites);
+};
+exports.getRecent = async (req, res) => {
+  const recent = await Vault.find({
+    userId: req.user.userId,
+  })
+    .sort({ lastAccessedAt: -1 })
+    .limit(10)
+    .select("-encryptedPassword -iv -authTag");
+
+  res.json(recent);
 };
