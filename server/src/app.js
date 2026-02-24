@@ -4,6 +4,7 @@ const helmet = require("helmet");
 const morgan = require("morgan");
 const authRoutes = require("./routes/auth.routes");
 const folderRoutes = require("./routes/folder.routes");
+const vaultRoutes = require("./routes/vault.routes");
 
 const app = express();
 
@@ -17,4 +18,5 @@ app.get("/health", (req, res) => {
 });
 app.use("/api/auth", authRoutes);
 app.use("/api/folders", folderRoutes);
+app.use("/api/vault", vaultRoutes);
 module.exports = app;

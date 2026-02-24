@@ -1,0 +1,65 @@
+const Vault = require("../models/Vault");
+const { encrypt, decrypt } = require("../utils/crypto");
+
+const SECRET = process.env.JWT_SECRET; // reuse securely
+
+// ADD password
+exports.addPassword = async (req, res) => {
+  try {
+    const { website, username, password, folderId } = req.body;
+
+    const encrypted = encrypt(password, SECRET);
+
+    const vault = await Vault.create({
+      userId: req.user.userId,
+      folderId,
+      website,
+      username,
+      encryptedPassword: encrypted.encryptedData,
+      iv: encrypted.iv,
+      authTag: encrypted.authTag,
+    });
+
+    res.status(201).json(vault);
+  } catch (err) {
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+// GET passwords (without decrypting)
+exports.getPasswords = async (req, res) => {
+  try {
+    const passwords = await Vault.find({
+      userId: req.user.userId,
+    }).select("-encryptedPassword -iv -authTag");
+
+    res.json(passwords);
+  } catch (err) {
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+// DECRYPT one password
+exports.decryptPassword = async (req, res) => {
+  try {
+    const vault = await Vault.findOne({
+      _id: req.params.id,
+      userId: req.user.userId,
+    });
+
+    if (!vault) {
+      return res.status(404).json({ message: "Not found" });
+    }
+
+    const decrypted = decrypt(
+      vault.encryptedPassword,
+      SECRET,
+      vault.iv,
+      vault.authTag
+    );
+
+    res.json({ password: decrypted });
+  } catch (err) {
+    res.status(500).json({ message: "Server error" });
+  }
+};

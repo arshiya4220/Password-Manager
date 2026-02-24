@@ -1,0 +1,34 @@
+const crypto = require("crypto");
+
+const ALGORITHM = "aes-256-gcm";
+
+exports.encrypt = (text, secret) => {
+  const iv = crypto.randomBytes(16);
+  const key = crypto.createHash("sha256").update(secret).digest();
+
+  const cipher = crypto.createCipheriv(ALGORITHM, key, iv);
+  let encrypted = cipher.update(text, "utf8", "hex");
+  encrypted += cipher.final("hex");
+
+  return {
+    encryptedData: encrypted,
+    iv: iv.toString("hex"),
+    authTag: cipher.getAuthTag().toString("hex"),
+  };
+};
+
+exports.decrypt = (encryptedData, secret, iv, authTag) => {
+  const key = crypto.createHash("sha256").update(secret).digest();
+
+  const decipher = crypto.createDecipheriv(
+    ALGORITHM,
+    key,
+    Buffer.from(iv, "hex")
+  );
+  decipher.setAuthTag(Buffer.from(authTag, "hex"));
+
+  let decrypted = decipher.update(encryptedData, "hex", "utf8");
+  decrypted += decipher.final("utf8");
+
+  return decrypted;
+};
