@@ -1,5 +1,6 @@
 const Vault = require("../models/Vault");
 const { encrypt, decrypt } = require("../utils/crypto");
+const hashPassword = require("../utils/passwordHash");
 
 const SECRET = process.env.JWT_SECRET; // reuse securely
 
@@ -9,6 +10,16 @@ exports.addPassword = async (req, res) => {
     const { website, username, password, folderId } = req.body;
 
     const encrypted = encrypt(password, SECRET);
+    const passwordHash = hashPassword(password);
+
+    const isWeak = (password) => {
+      return (
+        password.length < 8 ||
+        /^[a-zA-Z]+$/.test(password) ||
+        /^[0-9]+$/.test(password)
+      );
+    };
+    const weak = isWeak(password);
 
     const vault = await Vault.create({
       userId: req.user.userId,
@@ -18,6 +29,8 @@ exports.addPassword = async (req, res) => {
       encryptedPassword: encrypted.encryptedData,
       iv: encrypted.iv,
       authTag: encrypted.authTag,
+      passwordHash,
+      isWeak: weak,
     });
 
     res.status(201).json(vault);

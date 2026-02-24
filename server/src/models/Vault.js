@@ -23,6 +23,14 @@ const vaultSchema = new mongoose.Schema(
     lastAccessedAt: {
       type: Date,
     },
+    passwordHash: {
+      type: String,
+      required: true,
+    },
+    isWeak: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true },
 );
