@@ -42,16 +42,23 @@ exports.addPassword = async (req, res) => {
 // GET passwords (without decrypting)
 exports.getPasswords = async (req, res) => {
   try {
+    const { folderId } = req.query;
+
+    if (!folderId) {
+      return res.status(400).json({ message: "folderId is required" });
+    }
+
     const passwords = await Vault.find({
       userId: req.user.userId,
+      folderId,
     }).select("-encryptedPassword -iv -authTag");
 
     res.json(passwords);
   } catch (err) {
+    console.error("GET PASSWORDS ERROR:", err.message);
     res.status(500).json({ message: "Server error" });
   }
 };
-
 // DECRYPT one password
 exports.decryptPassword = async (req, res) => {
   try {
