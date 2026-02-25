@@ -11,8 +11,11 @@ const securityRoutes = require("./routes/security.routes");
 const app = express();
 
 app.use(express.json());
-app.use(cors());
-app.use(helmet());
+app.use(
+  cors({
+    origin: "*",
+  })
+);app.use(helmet());
 app.use(morgan("dev"));
 
 app.get("/health", (req, res) => {
