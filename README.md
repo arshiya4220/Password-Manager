@@ -8,7 +8,7 @@ This project demonstrates how sensitive user data can be safely stored, encrypte
 
 ## 🌐 Live Demo
 
-- **Frontend:** https://password-manager.vercel.app  
+- **Frontend:** [https://password-manager.vercel.app  ](https://password-manager-sigma-roan.vercel.app/dashboard)
 - **Backend:** https://password-manager-api.onrender.com  
 
 ---
@@ -85,28 +85,22 @@ This project demonstrates how sensitive user data can be safely stored, encrypte
 
 ---
 
-## 📂 Project Structure
-Password-Manager/
-│
-├── client/ # React frontend
-│ └── src/
-│ ├── api/
-│ ├── auth/
-│ ├── components/
-│ ├── pages/
-│ └── utils/
-│
-├── server/ # Express backend
-│ ├── controllers/
-│ ├── models/
-│ ├── routes/
-│ ├── middleware/
-│ └── utils/
-│
-└── README.md
+## 📸 Screenshots
 
----
+### Login
+![Login](screenshots/login.png)
 
+### Folders Dashboard
+![Folders](screenshots/folders.png)
+
+### Password Vault
+![Vault](screenshots/vault.png)
+
+### Security Health
+![Security](screenshots/security.png)
+
+### Password Generator
+![Generator](screenshots/generator.png)
 ## ⚙️ Environment Variables
 
 Create a `.env` file inside the `server` directory:
@@ -116,7 +110,7 @@ PORT=5000
 MONGO_URI=your_mongodb_connection_string
 JWT_SECRET=your_secret_key
 
-▶️ Running the Project Locally
+## ▶️ Running the Project Locally
 Backend
 cd server
 npm install
@@ -130,7 +124,7 @@ Frontend: http://localhost:3000
 
 Backend: http://localhost:5000
 
-🚀 Deployment
+## 🚀 Deployment
 
 Frontend: Vercel
 
@@ -144,13 +138,3 @@ Arshiya
 
 
 ---
-
-## ✅ WHAT TO DO NEXT (IMPORTANT)
-
-1️⃣ Commit README  
-```bash
-git add README.md
-git commit -m "Add final README with live deployment"
-git push
-
-Built to demonstrate real-world MERN stack development with a strong focus on security and clean architecture.
