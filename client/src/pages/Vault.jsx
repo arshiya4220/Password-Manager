@@ -1,13 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useParams } from "react-router-dom";
-import {
-  Table,
-  Button,
-  Modal,
-  Form,
-  Input,
-  Space,
-} from "antd";
+import { Table, Button, Modal, Form, Input, Space } from "antd";
 import {
   EyeOutlined,
   StarOutlined,
@@ -26,14 +19,13 @@ const Vault = () => {
   const [data, setData] = useState([]);
   const [open, setOpen] = useState(false);
 
-  const loadVault = async () => {
+  const loadVault = useCallback(async () => {
     const res = await getVault(folderId);
     setData(res);
-  };
-
+  }, [folderId]);
   useEffect(() => {
     loadVault();
-  }, [folderId]);
+  }, [loadVault]);
 
   const onAdd = async (values) => {
     await addPassword({ ...values, folderId });
@@ -61,14 +53,9 @@ const Vault = () => {
       title: "Actions",
       render: (_, record) => (
         <Space>
+          <Button icon={<EyeOutlined />} onClick={() => onDecrypt(record)} />
           <Button
-            icon={<EyeOutlined />}
-            onClick={() => onDecrypt(record)}
-          />
-          <Button
-            icon={
-              record.isFavorite ? <StarFilled /> : <StarOutlined />
-            }
+            icon={record.isFavorite ? <StarFilled /> : <StarOutlined />}
             onClick={() => onFavorite(record)}
           />
         </Space>
