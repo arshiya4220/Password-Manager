@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
 import { Card, Button, Modal, Form, Input, List } from "antd";
 import { createFolder, getFolders } from "../api/folder.api";
+import { useNavigate } from "react-router-dom";
 
 const Folders = () => {
+    const navigate = useNavigate();
+
   const [folders, setFolders] = useState([]);
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -29,14 +32,20 @@ const Folders = () => {
       title="Folders"
       extra={<Button onClick={() => setOpen(true)}>Add Folder</Button>}
     >
-      <List
-        dataSource={folders}
-        renderItem={(item) => (
-          <List.Item>
-            <Card style={{ width: "100%" }}>{item.name}</Card>
-          </List.Item>
-        )}
-      />
+     <List
+  dataSource={folders}
+  renderItem={(item) => (
+    <List.Item>
+      <Card
+        hoverable
+        style={{ width: "100%", cursor: "pointer" }}
+        onClick={() => navigate(`/dashboard/folders/${item._id}`)}
+      >
+        {item.name}
+      </Card>
+    </List.Item>
+  )}
+/>
 
       <Modal
         title="Create Folder"

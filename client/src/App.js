@@ -12,6 +12,7 @@ import Recent from "./pages/Recent";
 import Security from "./pages/Security";
 import Generator from "./pages/Generator";
 import DashboardLayout from "./pages/Dashboard";
+import Vault from "./pages/Vault";
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
             <Route path="recent" element={<Recent />} />
             <Route path="security" element={<Security />} />
             <Route path="generator" element={<Generator />} />
+            <Route path="folders/:id" element={<Vault />} />
           </Route>
         </Routes>
       </BrowserRouter>
