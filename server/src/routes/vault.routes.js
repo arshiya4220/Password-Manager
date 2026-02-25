@@ -7,6 +7,7 @@ const {
   decryptPassword,
   toggleFavorite,
   getFavorites,
+  getRecent
 } = require("../controllers/vault.controller");
 
 router.post("/", authMiddleware, addPassword);
