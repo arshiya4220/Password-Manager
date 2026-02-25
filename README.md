@@ -8,8 +8,7 @@ This project demonstrates how sensitive user data can be safely stored, encrypte
 
 ## 🌐 Live Demo
 
-- **Frontend:** [https://password-manager.vercel.app  ](https://password-manager-sigma-roan.vercel.app/dashboard)
-- **Backend:** https://password-manager-api.onrender.com  
+- [https://password-manager.vercel.app  ](https://password-manager-sigma-roan.vercel.app/dashboard)
 
 ---
 
@@ -87,54 +86,29 @@ This project demonstrates how sensitive user data can be safely stored, encrypte
 
 ## 📸 Screenshots
 
-### Login
-![Login](screenshots/login.png)
-
 ### Folders Dashboard
 ![Folders](screenshots/folders.png)
 
 ### Password Vault
-![Vault](screenshots/vault.png)
+![Favorites](screenshots/favorites.png)
 
 ### Security Health
-![Security](screenshots/security.png)
+![Recent](screenshots/recent.png)
 
 ### Password Generator
 ![Generator](screenshots/generator.png)
 ## ⚙️ Environment Variables
 
-Create a `.env` file inside the `server` directory:
-
-```env
-PORT=5000
-MONGO_URI=your_mongodb_connection_string
-JWT_SECRET=your_secret_key
-
-## ▶️ Running the Project Locally
-Backend
-cd server
-npm install
-npm run dev
-Frontend
-cd client
-npm install
-npm start
-
-Frontend: http://localhost:3000
-
-Backend: http://localhost:5000
+---
 
 ## 🚀 Deployment
 
-Frontend: Vercel
+- Frontend: Vercel
+- Backend: Render
+- Database: MongoDB Atlas
 
-Backend: Render
+## 👨‍💻 Author
 
-Database: MongoDB Atlas
-
-👨‍💻 Author
-
-Arshiya
-
+- Arshiya
 
 ---
