@@ -7,7 +7,7 @@ import { useAuth } from "../auth/AuthContext";
 const { Title } = Typography;
 
 const Register = () => {
-    const { login, token } = useAuth();
+    const { token } = useAuth();
   
   const navigate = useNavigate();
     useEffect(() => {
